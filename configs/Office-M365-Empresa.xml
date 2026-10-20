@@ -1,0 +1,23 @@
+<!-- Microsoft 365 Apps para empresa (suscripcion) - espanol 64-bit -->
+<!-- Uso: setup.exe /configure Office-M365-Empresa.xml -->
+<!-- OJO: M365 se activa con la cuenta de Microsoft 365 del usuario, -->
+<!-- NO usa KMS. Para KMS usa Office-ProPlus2021-VL.xml -->
+<Configuration>
+  <Add OfficeClientEdition="64" Channel="Current">
+    <Product ID="O365BusinessRetail">
+      <Language ID="es-es" />
+      <!-- Descomenta para quitar apps: -->
+      <!-- <ExcludeApp ID="Access" /> -->
+      <!-- <ExcludeApp ID="Groove" /> -->
+      <!-- <ExcludeApp ID="Lync" /> -->
+      <!-- <ExcludeApp ID="OneDrive" /> -->
+      <!-- <ExcludeApp ID="OneNote" /> -->
+      <!-- <ExcludeApp ID="Outlook" /> -->
+      <!-- <ExcludeApp ID="Publisher" /> -->
+      <!-- <ExcludeApp ID="Teams" /> -->
+    </Product>
+  </Add>
+  <Display Level="None" AcceptEULA="TRUE" />
+  <Updates Enabled="TRUE" Channel="Current" />
+  <Logging Level="Standard" Path="%temp%" />
+</Configuration>

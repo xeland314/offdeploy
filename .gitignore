@@ -1,0 +1,8 @@
+# ODT (se descarga de Microsoft, ver odt/LEEME.txt)
+odt/setup.exe
+odt/*.cab
+odt/*.xml
+odt/*.txt
+!odt/LEEME.txt
+# Logs
+*.log

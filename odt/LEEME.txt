@@ -1,0 +1,8 @@
+# Office Deployment Tool (ODT) va aqui
+#
+# 1) Descarga: https://www.microsoft.com/en-us/download/details.aspx?id=49117
+#    (officedeploymenttool_XXXXX.exe)
+# 2) Ejecuta el .exe y extrae el contenido en ESTA carpeta (odt\).
+#    Debe quedar: odt\setup.exe (+ archivos de version)
+#
+# No se commitea setup.exe al repo (ver .gitignore).

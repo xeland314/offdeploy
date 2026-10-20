@@ -1,0 +1,26 @@
+<!-- Office LTSC Professional Plus 2021 - Volumen (KMS) - espanol 64-bit -->
+<!-- Uso: setup.exe /configure Office-ProPlus2021-VL.xml -->
+<!-- La clave es GVLK publica de Microsoft (canal volumen). La activacion -->
+<!-- real se hace contra el KMS del IBM (ver Activar-Office.ps1). AUTOACTIVATE -->
+<!-- en 0 para activar manual y no contra MS. -->
+<Configuration>
+  <Add OfficeClientEdition="64" Channel="PerpetualVL2021">
+    <Product ID="ProPlus2021Volume">
+      <Language ID="es-es" />
+      <PIDKEY Value="FXYTK-NJJ8C-GB6DW-3DYQT-6F2ZS" />
+      <!-- Descomenta para quitar apps: -->
+      <!-- <ExcludeApp ID="Access" /> -->
+      <!-- <ExcludeApp ID="Groove" /> -->
+      <!-- <ExcludeApp ID="Lync" /> -->
+      <!-- <ExcludeApp ID="OneDrive" /> -->
+      <!-- <ExcludeApp ID="OneNote" /> -->
+      <!-- <ExcludeApp ID="Outlook" /> -->
+      <!-- <ExcludeApp ID="Publisher" /> -->
+    </Product>
+  </Add>
+  <RemoveMSI />
+  <Display Level="None" AcceptEULA="TRUE" />
+  <Property Name="AUTOACTIVATE" Value="0" />
+  <Updates Enabled="TRUE" Channel="PerpetualVL2021" />
+  <Logging Level="Standard" Path="%temp%" />
+</Configuration>
