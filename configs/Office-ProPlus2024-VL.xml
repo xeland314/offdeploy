@@ -1,0 +1,25 @@
+<!-- Office LTSC Professional Plus 2024 - Volumen (KMS) - espanol 64-bit -->
+<!-- Uso: setup.exe /configure Office-ProPlus2024-VL.xml -->
+<!-- SIN PIDKEY a proposito: la clave GVLK se instala despues con -->
+<!-- Activar-Office.ps1 -Key <clave> (ospp valida la clave al instante; -->
+<!-- una clave mala en el XML abortaria la instalacion desatendida). -->
+<Configuration>
+  <Add OfficeClientEdition="64" Channel="PerpetualVL2024">
+    <Product ID="ProPlus2024Volume">
+      <Language ID="es-es" />
+      <!-- Descomenta para quitar apps: -->
+      <!-- <ExcludeApp ID="Access" /> -->
+      <!-- <ExcludeApp ID="Groove" /> -->
+      <!-- <ExcludeApp ID="Lync" /> -->
+      <!-- <ExcludeApp ID="OneDrive" /> -->
+      <!-- <ExcludeApp ID="OneNote" /> -->
+      <!-- <ExcludeApp ID="Outlook" /> -->
+      <!-- <ExcludeApp ID="Publisher" /> -->
+    </Product>
+  </Add>
+  <RemoveMSI />
+  <Display Level="None" AcceptEULA="TRUE" />
+  <Property Name="AUTOACTIVATE" Value="0" />
+  <Updates Enabled="TRUE" Channel="PerpetualVL2024" />
+  <Logging Level="Standard" Path="%temp%" />
+</Configuration>

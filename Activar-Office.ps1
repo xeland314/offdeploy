@@ -4,12 +4,14 @@
     Activa Office (Volumen) contra el KMS del IBM + opcional Windows.
 .EJEMPLO
     .\Activar-Office.ps1
+    .\Activar-Office.ps1 -Key FXYTK-NJJ8C-GB6DW-3DYQT-6F2ZS
     .\Activar-Office.ps1 -KmsHost 192.168.100.124 -KmsPort 1688
     .\Activar-Office.ps1 -Windows   # tambien activa Windows vs el KMS
 #>
 param(
     [string]$KmsHost = "192.168.100.124",
     [int]$KmsPort = 1688,
+    [string]$Key = "",
     [switch]$Windows
 )
 
@@ -26,6 +28,12 @@ function Find-Ospp {
 
 $ospp = Find-Ospp
 if (-not $ospp) { Write-Host "Office no encontrado (falta OSPP.VBS). Instala primero." -ForegroundColor Red; exit 1 }
+
+if ($Key -ne "") {
+    Write-Host "Instalando clave GVLK..." -ForegroundColor Cyan
+    cscript //nologo "$ospp" /inpkey:$Key
+    if ($LASTEXITCODE -ne 0) { Write-Host "La clave fue RECHAZADA. Verifica SKU/clave y reintenta." -ForegroundColor Red; exit 1 }
+}
 
 Write-Host "KMS -> ${KmsHost}:${KmsPort}" -ForegroundColor Cyan
 cscript //nologo "$ospp" /sethst:$KmsHost | Select-String "Successfully|correcto|host"

@@ -35,6 +35,7 @@ cd C:\office-deploy
 | Archivo | Para qué |
 |---|---|
 | `configs/Office-ProPlus2021-VL.xml` | Office LTSC Pro Plus 2021, es-es, 64-bit, canal `PerpetualVL2021`, clave GVLK pública, `AUTOACTIVATE=0`. **Esta es la que usa KMS.** |
+| `configs/Office-ProPlus2024-VL.xml` | Office LTSC Pro Plus 2024, canal `PerpetualVL2024`. **Sin PIDKEY a propósito**: instala y luego `Activar-Office.ps1 -Key <clave>` (ospp valida al instante; una clave mala en el XML abortaría la instalación). |
 | `configs/Office-M365-Empresa.xml` | Microsoft 365 Apps (suscripción). Se activa con la cuenta M365 del usuario, **no usa KMS**. |
 | `Instalar-Office.ps1` | Corre `setup.exe /configure <xml>`. Sin intervención (`Display=None`). |
 | `Activar-Office.ps1` | `ospp.vbs /sethst + /setprt + /act + /dstatus`. Switch `-Windows` para `slmgr /skms + /ato`. |
