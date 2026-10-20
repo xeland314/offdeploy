@@ -6,28 +6,43 @@ activación contra el KMS propio (`192.168.100.124:1688`, vlmcsd en el IBM).
 ## Requisito único
 
 - Windows 10/11 64-bit con red a la oficina (o Tailscale al IBM).
-- PowerShell **como Administrador**.
+- Los scripts **piden Administrador solos**: si los abres sin elevar,
+  se relanzan con UAC (acepta el aviso). Vale doble clic.
+
+## Permisos y ExecutionPolicy Bypass
+
+Si PowerShell bloquea el script (`cannot be loaded... execution of scripts
+is disabled`), correlo con Bypass (solo afecta a esa ejecucion, no cambia
+nada del sistema):
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\Instalar-Office.ps1
+powershell -ExecutionPolicy Bypass -File .\Activar-Office.ps1 -Key TU-CLAVE
+```
+
+Con GPO `MachinePolicy`/`ConstrainedLanguage` el Bypass no alcanza: en ese
+caso firma el script o ejecutalo desde sesion de admin con
+`Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass` antes.
 
 ## Uso en una PC nueva (5 min)
 
 ```powershell
 # 1) Copia esta carpeta a la PC (USB o red) y entra en ella
-cd C:\office-deploy
+cd C:\offdeploy
 
 # 2) Pon setup.exe del ODT en odt\ (solo la primera vez por PC/repo)
 #    Descarga: https://www.microsoft.com/en-us/download/details.aspx?id=49117
 #    Ejecuta el .exe y extrae en odt\
 
-# 3) Instala (edicion Volumen 2021 por defecto)
-.\Instalar-Office.ps1
-#    o la variante suscripcion:
-#    .\Instalar-Office.ps1 -Config .\configs\Office-M365-Empresa.xml
+# 3) Instala (edicion Volumen 2021 por defecto) - pide UAC solo
+powershell -ExecutionPolicy Bypass -File .\Instalar-Office.ps1
+#    o la variante suscripcion / 2024:
+#    powershell -ExecutionPolicy Bypass -File .\Instalar-Office.ps1 -Config .\configs\Office-M365-Empresa.xml
+#    powershell -ExecutionPolicy Bypass -File .\Instalar-Office.ps1 -Config .\configs\Office-ProPlus2024-VL.xml
 
-# 4) Activa contra el KMS del IBM (solo ediciones Volumen)
-.\Activar-Office.ps1
-#    con otro host/puerto:
-#    .\Activar-Office.ps1 -KmsHost 192.168.100.124 -KmsPort 1688
-#    tambien Windows:  .\Activar-Office.ps1 -Windows
+# 4) Activa contra el KMS del IBM (solo ediciones Volumen) - pide UAC solo
+powershell -ExecutionPolicy Bypass -File .\Activar-Office.ps1 -Key TU-CLAVE-GVLK
+#    tambien Windows:  ... -Key TU-CLAVE -Windows
 ```
 
 ## Qué hace cada archivo

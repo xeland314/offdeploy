@@ -1,14 +1,25 @@
-#Requires -RunAsAdministrator
 <#
 .SYNOPSIS
-    Instala Office con ODT + XML de este repo.
+    Instala Office con ODT + XML de este repo (pide Admin solo).
 .EJEMPLO
-    .\Instalar-Office.ps1
-    .\Instalar-Office.ps1 -Config .\configs\Office-M365-Empresa.xml
+    powershell -ExecutionPolicy Bypass -File .\Instalar-Office.ps1
+    powershell -ExecutionPolicy Bypass -File .\Instalar-Office.ps1 -Config .\configs\Office-M365-Empresa.xml
 #>
 param(
     [string]$Config = (Join-Path $PSScriptRoot "configs\Office-ProPlus2021-VL.xml")
 )
+
+# --- Auto-elevar a Administrador (vale doble clic) ---
+$esAdmin = ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
+if (-not $esAdmin) {
+    Write-Host "Re-lanzando como Administrador (UAC)..." -ForegroundColor Yellow
+    $reenvio = ($PSBoundParameters.GetEnumerator() | ForEach-Object {
+        if ($_.Value -is [System.Management.Automation.SwitchParameter]) { if ($_.Value) { "-$($_.Key)" } }
+        else { "-$($_.Key) `"$($_.Value)`"" }
+    }) -join ' '
+    Start-Process powershell.exe -ArgumentList "-ExecutionPolicy Bypass -File `"$PSCommandPath`" $reenvio" -Verb RunAs
+    exit
+}
 
 $ErrorActionPreference = "Stop"
 $setup = Join-Path $PSScriptRoot "odt\setup.exe"

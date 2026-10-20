@@ -1,12 +1,10 @@
-#Requires -RunAsAdministrator
 <#
 .SYNOPSIS
-    Activa Office (Volumen) contra el KMS del IBM + opcional Windows.
+    Activa Office (Volumen) contra el KMS del IBM + opcional Windows (pide Admin).
 .EJEMPLO
-    .\Activar-Office.ps1
-    .\Activar-Office.ps1 -Key FXYTK-NJJ8C-GB6DW-3DYQT-6F2ZS
-    .\Activar-Office.ps1 -KmsHost 192.168.100.124 -KmsPort 1688
-    .\Activar-Office.ps1 -Windows   # tambien activa Windows vs el KMS
+    powershell -ExecutionPolicy Bypass -File .\Activar-Office.ps1
+    powershell -ExecutionPolicy Bypass -File .\Activar-Office.ps1 -Key FXYTK-NJJ8C-GB6DW-3DYQT-6F2ZS
+    powershell -ExecutionPolicy Bypass -File .\Activar-Office.ps1 -Windows
 #>
 param(
     [string]$KmsHost = "192.168.100.124",
@@ -14,6 +12,18 @@ param(
     [string]$Key = "",
     [switch]$Windows
 )
+
+# --- Auto-elevar a Administrador (vale doble clic) ---
+$esAdmin = ([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)
+if (-not $esAdmin) {
+    Write-Host "Re-lanzando como Administrador (UAC)..." -ForegroundColor Yellow
+    $reenvio = ($PSBoundParameters.GetEnumerator() | ForEach-Object {
+        if ($_.Value -is [System.Management.Automation.SwitchParameter]) { if ($_.Value) { "-$($_.Key)" } }
+        else { "-$($_.Key) `"$($_.Value)`"" }
+    }) -join ' '
+    Start-Process powershell.exe -ArgumentList "-ExecutionPolicy Bypass -File `"$PSCommandPath`" $reenvio" -Verb RunAs
+    exit
+}
 
 $ErrorActionPreference = "Stop"
 
