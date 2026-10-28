@@ -55,6 +55,21 @@ powershell -ExecutionPolicy Bypass -File .\Activar-Office.ps1 -Key TU-CLAVE-GVLK
 | `Instalar-Office.ps1` | Corre `setup.exe /configure <xml>`. Sin intervención (`Display=None`). |
 | `Activar-Office.ps1` | `ospp.vbs /sethst + /setprt + /act + /dstatus`. Switch `-Windows` para `slmgr /skms + /ato`. |
 | `odt/` | Aquí va `setup.exe` del ODT (no se commitea). |
+| `Optimizar-Win11.ps1` | Puesta a punto de Win11 en PCs viejas (HP G42 i3-370M, Toshiba L745 Sandy Bridge): desactiva VBS/integridad de memoria, `SysMain`/`WSearch`/telemetría, widgets/Copilot y limita CPU al 80%. Ejecutar 1 vez + reiniciar. |
+
+## Optimizar Win11 en PC vieja (una vez tras instalar)
+
+Si la PC quedó con CPU al 100% y ventilador al tope después de instalar
+Win11 con bypass, corre esto una vez (se auto-eleva) y reinicia:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\Optimizar-Win11.ps1
+```
+
+Corta la mayoría del consumo de fondo: el mayor golpe es apagar
+**Integridad de memoria (VBS/HVCI)**, que en CPUs de 2010-2011 cuesta
+5-15% de CPU constante; le siguen `SysMain` y el indexado de búsqueda
+(con disco mecánico), y las tareas de telemetría.
 
 ## Personalizar
 
